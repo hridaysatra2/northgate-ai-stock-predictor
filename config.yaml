@@ -1,0 +1,23 @@
+project:
+  random_seed: 42
+  market: "US"
+
+universe:
+  tickers:
+    - AAPL
+    - MSFT
+    - JPM
+    - JNJ
+    - PG
+    - XOM
+    - HD
+    - V
+    - CAT
+    - KO
+  benchmark: "^GSPC"
+  risk_regime_ticker: "^VIX"
+  start_date: "2016-01-01"
+  research_cutoff_date: "2026-08-31"
+
+data_sources:
+  market: "yfinance"
