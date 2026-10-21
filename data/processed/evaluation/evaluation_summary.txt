@@ -1,0 +1,12 @@
+Northgate AI Stock Predictor — Task 2D evaluation summary
+(classical ML test results; evaluated once, not used for tuning)
+
+Tickers evaluated: 10; models: random_walk, linear_regression, ridge, random_forest, xgboost, svr.
+Lowest mean test RMSE: random_walk (0.015330).
+Highest mean directional accuracy: random_forest (0.5090).
+Most baseline wins: random_forest beats random_walk on 4 tickers by RMSE.
+Across all non-baseline evaluations, models beat random_walk 5/50 times by RMSE; random_walk itself is the per-ticker winner 6 times.
+Mean directional accuracy (non-baseline): 0.4939 (0.5 = coin flip).
+Classical ML does NOT consistently beat the zero-return baseline; results are mixed across stocks, and where models trail the baseline that is reported as-is above.
+Daily stock-return prediction is difficult; these statistics must NOT be interpreted as proof of profitable trading performance.
+MAPE is reported for completeness but is unstable for near-zero returns; RMSE/MAE remain the primary error metrics. R2 here is a variance-explained statistic, not a baseline comparison.

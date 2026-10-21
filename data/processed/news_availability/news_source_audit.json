@@ -1,0 +1,127 @@
+{
+  "audit": "Task 3C news data availability audit ONLY (no sentiment modelling, no training)",
+  "research_period": {
+    "start": "2016-01-01",
+    "end": "2026-08-31"
+  },
+  "universe": ["AAPL", "MSFT", "JPM", "JNJ", "PG", "XOM", "HD", "V", "CAT", "KO"],
+  "retrieval_timestamp_utc": "2026-09-24T19:49:01Z",
+  "environment": {
+    "library": "yfinance==1.7.0",
+    "api_keys_present": {
+      "NEWS_API_KEY": false,
+      "ALPHA_VANTAGE_API_KEY": false
+    }
+  },
+  "sources": [
+    {
+      "source": "yfinance Ticker.news (Yahoo Finance)",
+      "access_method": "Python property yfinance.Ticker(t).news (no parameters possible; verified property object)",
+      "endpoint_library": "yfinance==1.7.0, already in project environment; no key required",
+      "live_tested": true,
+      "sample": {
+        "ticker_queried": "AAPL",
+        "n_items_returned": 10,
+        "oldest_pubDate": "2026-09-23T19:50:58Z",
+        "newest_pubDate": "2026-09-24T19:13:00Z",
+        "all_items_after_research_cutoff_2026_08_31": true,
+        "historical_pagination_available": false
+      },
+      "timestamp_availability": true,
+      "timestamp_precision": "second",
+      "timestamp_timezone": "UTC explicit (ISO-8601 Z suffix); convertible to America/New_York for session mapping",
+      "ticker_company_identification": "WEAK: no per-article ticker/symbol field; association is only the queried ticker, and the AAPL feed contained Qualcomm (QCOM) items (contamination observed)",
+      "title_headline_availability": true,
+      "body_availability": false,
+      "session_mapping_precision": "timestamps are second-precision UTC so before/after-close mapping is mechanically possible, but pointless: no historical coverage",
+      "covers_full_2016_01_01_to_2026_08_31": false,
+      "requires_key_or_paid": false,
+      "rate_limits": "undocumented Yahoo throttling; recent-only feed regardless",
+      "suitable_for_leakage_free_3C": false,
+      "unsuitability_reason": "recent-only feed (~last 1-2 days, all after research cutoff); no historical pagination by construction (parameterless property); no article body; no per-article ticker field with observed cross-ticker contamination"
+    },
+    {
+      "source": "GDELT 2.1 DOC API (artlist mode)",
+      "access_method": "GET https://api.gdeltproject.org/api/v2/doc/doc?query=<keyword>&mode=artlist&maxrecords=N&format=json&startdatetime=..&enddatetime=..",
+      "endpoint_library": "plain HTTPS (urllib); no key required; free",
+      "live_tested": true,
+      "sample": {
+        "query": "Apple",
+        "window": "2020-01-01 to 2020-01-02",
+        "maxrecords_requested": 3,
+        "n_items_returned": 3,
+        "fields_returned": ["url", "url_mobile", "title", "seendate", "socialimage", "domain", "language", "sourcecountry"],
+        "seendate_examples": ["20200102T051500Z", "20200102T064500Z", "20200102T200000Z"],
+        "entity_ambiguity_observed": "keyword 'Apple' returned Chinese-language items including an apple-futures commodity blog (company-vs-fruit ambiguity); no ticker resolution"
+      },
+      "timestamp_availability": true,
+      "timestamp_precision": "minute",
+      "timestamp_timezone": "UTC explicit, BUT seendate is when GDELT first saw the article, not the publisher's publication timestamp",
+      "ticker_company_identification": "ABSENT: keyword search only; no ticker/symbol entity field; company-vs-commodity ambiguity demonstrated in sample",
+      "title_headline_availability": true,
+      "body_availability": false,
+      "session_mapping_precision": "INSUFFICIENT: seendate is a crawl-seen time (minute precision), not a publication time; cannot reliably decide before/after 16:00 ET close, and weekend/holiday attribution inherits the same error",
+      "covers_full_2016_01_01_to_2026_08_31": "partial: DOC 2.1 archive starts 2017 (GDELT 1.x from 2015); 2016-01-01..2016-12-31 not covered by this endpoint; query language/keyword bias unquantified",
+      "requires_key_or_paid": false,
+      "rate_limits": "HTTP 429 observed on first attempt 2026-09-24; succeeded after 20 s backoff; undocumented quota",
+      "suitable_for_leakage_free_3C": false,
+      "unsuitability_reason": "no ticker-level entity resolution (demonstrated ambiguity); no publication timestamp (seendate only); no body; rate-limited; incomplete research-period coverage"
+    },
+    {
+      "source": "NewsAPI (newsapi.org)",
+      "access_method": "not tested live: no key in environment; historical full-archive search is a paid plan",
+      "endpoint_library": "N/A (no credential; no download attempted)",
+      "live_tested": false,
+      "sample": null,
+      "timestamp_availability": "documented publishedAt per article (unverified here)",
+      "timestamp_precision": "documented second (unverified here)",
+      "timestamp_timezone": "documented UTC ISO-8601 (unverified here)",
+      "ticker_company_identification": "query-based (company name/keywords); no guaranteed ticker entity field (unverified here)",
+      "title_headline_availability": "documented title+description; full body not provided, only truncated content (unverified here)",
+      "body_availability": false,
+      "session_mapping_precision": "cannot assess without access",
+      "covers_full_2016_01_01_to_2026_08_31": "free plan covers ~1 month only; full-period archive requires paid plan (public pricing; unverified live)",
+      "requires_key_or_paid": true,
+      "rate_limits": "key-gated quotas (unverified here)",
+      "suitable_for_leakage_free_3C": false,
+      "unsuitability_reason": "no credential available; free tier cannot cover the research period; not reproducible in this environment"
+    },
+    {
+      "source": "Alpha Vantage News & Sentiment API",
+      "access_method": "not tested live: no key in environment",
+      "endpoint_library": "N/A (no credential; no download attempted)",
+      "live_tested": false,
+      "sample": {
+        "note": "vendor documents ticker-specific query with time_from/time_to back to ~2009+ depending on plan (unverified here)"
+      },
+      "timestamp_availability": "documented time_published per article (unverified here)",
+      "timestamp_precision": "documented minute (unverified here)",
+      "timestamp_timezone": "documented US Eastern (unverified here)",
+      "ticker_company_identification": "documented ticker-sentiment entities per article, the closest fit of the four (unverified here)",
+      "title_headline_availability": "documented title+summary (unverified here)",
+      "body_availability": false,
+      "session_mapping_precision": "in principle the best fit (ticker entities + Eastern timestamps), but unverified without a key",
+      "covers_full_2016_01_01_to_2026_08_31": "vendor claims deep history on premium tiers; free tier limited to recent window with strict rate limits (public docs; unverified live)",
+      "requires_key_or_paid": true,
+      "rate_limits": "free tier ~25 requests/day documented (unverified here); full history needs premium",
+      "suitable_for_leakage_free_3C": false,
+      "unsuitability_reason": "no credential available in this environment, so suitability cannot be verified; free tier insufficient for a 10-ticker 2016-2026 backfill; vendor sentiment scores must not be silently substituted for our own modelling"
+    }
+  ],
+  "session_mapping_rules_investigated": {
+    "market": "US equities; regular session 09:30-16:00 America/New_York",
+    "rule_before_close": "news published on trading day t at/before 16:00 ET maps to prediction timestamp t (available by close t)",
+    "rule_after_close": "news published on trading day t after 16:00 ET maps to prediction timestamp t+1 (first available by close t+1)",
+    "rule_weekend": "Saturday/Sunday news maps to the next Monday (or next trading day) prediction timestamp as pre-open information",
+    "rule_exchange_holiday": "holiday news maps to the next trading session prediction timestamp",
+    "assessment": "rules are well-defined ONLY given second-precision publication timestamps with known timezone plus a holiday calendar; yfinance meets the timestamp bar but has no history, GDELT fails the timestamp bar (seendate != pubtime), key-gated sources unverifiable here"
+  },
+  "verdict": {
+    "suitable_source_found": false,
+    "statement": "No free, reproducible source available in this environment covers the full 2016-01-01..2026-08-31 period with publication timestamps and ticker-level association. Forcing Task 3C on yfinance-recent or GDELT-keyword data would violate leakage-free and timestamp requirements.",
+    "no_synthetic_substitution": "no synthetic, randomly generated, current-news-as-history, or unrelated-sentiment data was created or substituted; samples are small live reads recorded above",
+    "recommended_next_step": "STOP sentiment modelling until either (a) a licensed entity-resolved timestamped feed (e.g. Bloomberg/RavenPack/Refinitiv, or Alpha Vantage premium with key + timestamp/entity validation) is procured, or (b) project scope is formally reduced (e.g. forward-only collection from today, or a shorter window covered by an accessible archive). Any choice requires re-audit before Task 3C modelling."
+  },
+  "artifacts": ["news_source_audit.json", "news_source_audit.csv", "NEWS_DATA_AVAILABILITY.md"],
+  "protected_outputs_untouched": ["data/raw", "data/processed/features", "data/processed/models", "data/processed/evaluation", "data/processed/deep_learning", "data/processed/deep_learning_training"]
+}

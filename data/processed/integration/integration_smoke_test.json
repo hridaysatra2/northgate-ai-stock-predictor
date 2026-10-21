@@ -1,0 +1,54 @@
+{
+ "purpose": "SOFTWARE INTEGRATION TEST ONLY - not investment performance",
+ "inputs": {
+  "forecast": {
+   "ticker": "TEST",
+   "as_of_date": "2026-08-28",
+   "current_price": 200.0,
+   "predicted_log_return": 0.02,
+   "model_name": "synthetic_demo"
+  },
+  "risk": {
+   "ticker": "TEST",
+   "as_of_date": "2026-08-28",
+   "annualized_volatility": 0.15
+  },
+  "universe_volatilities": {
+   "TEST": 0.15,
+   "B": 0.2,
+   "C": 0.3,
+   "D": 0.4
+  },
+  "provenance": "synthetic_demo"
+ },
+ "output": {
+  "ticker": "TEST",
+  "as_of_date": "2026-08-28",
+  "current_price": 200.0,
+  "predicted_log_return": 0.02,
+  "predicted_simple_return": 0.02020134002675581,
+  "predicted_price": 204.04026800535115,
+  "model_name": "synthetic_demo",
+  "annualized_volatility": 0.15,
+  "risk_percentile": 0.25,
+  "risk_class": "normal",
+  "sharpe_ratio": null,
+  "sortino_ratio": null,
+  "maximum_drawdown": null,
+  "historical_var": null,
+  "sentiment_available": false,
+  "sentiment_score": null,
+  "sentiment_status": "unavailable",
+  "recommendation": "BUY",
+  "reason": "Forecast return is strongly positive and current volatility is within the normal risk range. Historical sentiment unavailable; recommendation uses forecast and risk only."
+ },
+ "validations": [
+  "forecast_schema",
+  "model_selection_dependency",
+  "provenance",
+  "risk_schema",
+  "recommendation_schema",
+  "timestamp_alignment",
+  "conversion_consistency"
+ ]
+}

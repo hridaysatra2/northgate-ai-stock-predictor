@@ -1,0 +1,91 @@
+{
+  "task": "3B leakage-free deep-learning training",
+  "target": "log(AdjClose_{t+1} / AdjClose_t)",
+  "input_shape": [
+    30,
+    30
+  ],
+  "output": "one scalar predicted next-day log return",
+  "device": {
+    "torch_version": "2.8.0+cu126",
+    "cuda_available": true,
+    "device": "cuda",
+    "device_name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "device_count": 1,
+    "total_memory_bytes": 8585216000,
+    "total_memory_gb": 8.0,
+    "capability": "8.9",
+    "multiprocessor_count": 24
+  },
+  "device_used": "cuda",
+  "torch_version": "2.8.0+cu126",
+  "seed": 42,
+  "architecture": {
+    "lstm": {
+      "input_size": 30,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "dropout": 0.1,
+      "bidirectional": false
+    },
+    "gru": {
+      "input_size": 30,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "dropout": 0.1,
+      "bidirectional": false
+    },
+    "bilstm": {
+      "input_size": 30,
+      "hidden_size": 64,
+      "num_layers": 1,
+      "dropout": 0.1,
+      "bidirectional": true
+    },
+    "transformer": {
+      "input_size": 30,
+      "d_model": 64,
+      "nhead": 4,
+      "num_layers": 2,
+      "dropout": 0.1,
+      "dim_feedforward": 128
+    }
+  },
+  "training": {
+    "optimizer": "Adam",
+    "loss": "MSELoss",
+    "learning_rate": 0.001,
+    "batch_size": 64,
+    "max_epochs": 50,
+    "early_stopping_patience": 8,
+    "weight_decay": 1e-05,
+    "model_selection": "validation loss only; best checkpoint restored",
+    "test_isolation": "test evaluated once after checkpoint selection; never used for tuning/early stopping/architecture",
+    "refit_policy": "no train+val refit; controlled test comparison"
+  },
+  "metrics_note": "RMSE/MAE primary; directional_accuracy separate; definitions identical to Task 2C compute_metrics; no profitability claims",
+  "bilstm_note": "bidirectionality operates only within the historical 30-step window, never on observations after t",
+  "workload": {
+    "n_tickers": 11,
+    "n_models": 4,
+    "n_runs": 44,
+    "total_train_sequences": 19832,
+    "train_per_ticker": {
+      "AAPL": 1803,
+      "MSFT": 1803,
+      "JPM": 1803,
+      "JNJ": 1803,
+      "PG": 1803,
+      "XOM": 1803,
+      "HD": 1803,
+      "V": 1803,
+      "CAT": 1803,
+      "KO": 1803,
+      "GSPC": 1802
+    },
+    "batches_per_epoch_all_runs": 1240,
+    "max_steps_all_runs": 62000,
+    "note": "tiny models (~30x30 inputs); seconds per run on RTX 4060 CUDA"
+  },
+  "failures": []
+}

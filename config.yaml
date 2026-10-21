@@ -21,3 +21,11 @@ universe:
 
 data_sources:
   market: "yfinance"
+
+recommendation:
+  # Configurable DEFAULTS only: not empirically validated, not tuned
+  # against test results. See data/processed/recommendations/
+  # RECOMMENDATION_METHODOLOGY.md and src/recommendation.py.
+  positive_return_threshold: 0.01
+  negative_return_threshold: -0.01
+  elevated_risk_percentile: 0.75

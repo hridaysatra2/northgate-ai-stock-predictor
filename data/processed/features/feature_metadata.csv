@@ -1,0 +1,32 @@
+feature_name,category,formula,lookback_window,annualized,source_columns,maximum_lookback,leakage_notes
+log_return_1d,return,log(adj_t/adj_{t-1}),1,False,adj_close,60,uses rows t-1..t only
+log_return_lag_2,return,log_return_1d shifted by 1,2,False,adj_close,60,value at t equals return of t-1
+log_return_lag_5,return,log_return_1d shifted by 4,5,False,adj_close,60,value at t equals return of t-4
+log_return_lag_10,return,log_return_1d shifted by 9,10,False,adj_close,60,value at t equals return of t-9
+sma_5,trend,mean(adj t-4..t),5,False,adj_close,60,trailing window rows t-w+1..t; min_periods=w; no future use
+sma_20,trend,mean(adj t-19..t),20,False,adj_close,60,trailing window rows t-w+1..t; min_periods=w; no future use
+sma_50,trend,mean(adj t-49..t),50,False,adj_close,60,trailing window rows t-w+1..t; min_periods=w; no future use
+price_to_sma20,trend,adj_t/sma_20(t)-1,20,False,adj_close,60,both inputs known at t
+price_to_sma50,trend,adj_t/sma_50(t)-1,50,False,adj_close,60,both inputs known at t
+momentum_5d,momentum,adj_t/adj_{t-5}-1,5,False,adj_close,60,uses rows t-5..t only
+momentum_10d,momentum,adj_t/adj_{t-10}-1,10,False,adj_close,60,uses rows t-10..t only
+momentum_20d,momentum,adj_t/adj_{t-20}-1,20,False,adj_close,60,uses rows t-20..t only
+vol_5d,volatility,std(logret t-4..t),5,False,adj_close,60,trailing window rows t-w+1..t; min_periods=w; no future use over past log returns
+vol_5d_ann,volatility,vol_5d*sqrt(252),5,True,adj_close,60,annualized trailing measure
+vol_20d,volatility,std(logret t-19..t),20,False,adj_close,60,trailing window rows t-w+1..t; min_periods=w; no future use over past log returns
+vol_20d_ann,volatility,vol_20d*sqrt(252),20,True,adj_close,60,annualized trailing measure
+vol_60d,volatility,std(logret t-59..t),60,False,adj_close,60,trailing window rows t-w+1..t; min_periods=w; no future use over past log returns
+vol_60d_ann,volatility,vol_60d*sqrt(252),60,True,adj_close,60,annualized trailing measure
+volume_change,volume,vol_t/vol_{t-1}-1,1,False,volume,60,uses rows t-1..t only; NaN never filled
+volume_sma_20,volume,mean(vol t-19..t),20,False,volume,60,trailing window rows t-w+1..t; min_periods=w; no future use
+volume_ratio_20,volume,vol_t/volume_sma_20(t),20,False,volume,60,both inputs known at t
+day_of_week,calendar,Monday=0..Friday=4 from date t,0,False,date,60,pure function of t
+month,calendar,1..12 from date t,0,False,date,60,pure function of t
+month_end,calendar,calendar is_month_end(date t),0,False,date,60,pure function of t; NOT observed last trading day
+sp500_log_return_1d,market,log(sp_adj_t/sp_adj_{t-1}),1,False,GSPC adj_close,60,computed on GSPC history; left-merged by date; no fill
+sp500_momentum_5d,market,sp_adj_t/sp_adj_{t-5}-1,5,False,GSPC adj_close,60,computed on GSPC history; left-merged by date; no fill
+sp500_vol_20d,market,std(sp logret t-19..t),20,False,GSPC adj_close,60,computed on GSPC history; left-merged by date; no fill
+vix_level,market,VIX close_t,0,False,VIX close,60,same-date market observation only
+vix_change_1d,market,vix_t/vix_{t-1}-1,1,False,VIX close,60,computed on VIX history; merged by date; no fill
+vix_change_5d,market,vix_t/vix_{t-5}-1,5,False,VIX close,60,computed on VIX history; merged by date; no fill
+target_log_return_1d,target,log(adj_{t+1}/adj_t) via shift(-1),1,False,adj_close,60,future price by construction; belongs to row t; last row dropped

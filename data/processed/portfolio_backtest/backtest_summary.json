@@ -1,0 +1,99 @@
+{
+ "lookback": 252,
+ "solver_options": {
+  "ftol": 1e-14
+ },
+ "initial_capital": 100000.0,
+ "risk_free_rate_annual": 0.0,
+ "risk_free_rate_daily": 0.0,
+ "sortino_target_daily": 0.0,
+ "var_confidence": 0.95,
+ "var_convention": "historical quantile, positive loss, daily horizon",
+ "annualization": "252 trading days",
+ "costs": "gross performance; transaction costs NOT modeled",
+ "requested_start": "2016-03-31",
+ "requested_end": "2026-08-28",
+ "actual_first_date": "2017-04-03",
+ "actual_last_date": "2026-08-28",
+ "n_rebalance_dates": 113,
+ "n_trading_observations": 2364,
+ "n_failed_rebalances": 0,
+ "strategies": [
+  "equal_weight",
+  "rolling_min_variance",
+  "rolling_max_sharpe"
+ ],
+ "benchmark": "sp500",
+ "disclaimer": "Descriptive historical comparison only. No strategy is claimed best, profitable in future, or profitable after costs.",
+ "metrics": {
+  "equal_weight": {
+   "cumulative_return": 4.250311063585908,
+   "annualized_return_geo": 0.1933586723243823,
+   "annualized_volatility": 0.17306329923914646,
+   "sharpe_ratio": 1.1084927334704266,
+   "sortino_ratio": 0.10022222932039747,
+   "maximum_drawdown": -0.33435165092783947,
+   "calmar_ratio": 0.5783093093388476,
+   "historical_var_daily": 0.014660636966749588,
+   "total_turnover": 1.0,
+   "n_observations": 2364
+  },
+  "rolling_min_variance": {
+   "cumulative_return": 1.697693652230007,
+   "annualized_return_geo": 0.11158678945380895,
+   "annualized_volatility": 0.15197747830765027,
+   "sharpe_ratio": 0.7724061316723453,
+   "sortino_ratio": 0.06841478379897714,
+   "maximum_drawdown": -0.32461934906454815,
+   "calmar_ratio": 0.34374657510517265,
+   "historical_var_daily": 0.012921913240785772,
+   "total_turnover": 17.62100227632287,
+   "n_observations": 2364
+  },
+  "rolling_max_sharpe": {
+   "cumulative_return": 3.8464296519162486,
+   "annualized_return_geo": 0.183219395546816,
+   "annualized_volatility": 0.21961938203691075,
+   "sharpe_ratio": 0.876164927470064,
+   "sortino_ratio": 0.08001602828488429,
+   "maximum_drawdown": -0.309707501152948,
+   "calmar_ratio": 0.5915884983887869,
+   "historical_var_daily": 0.020547160361379716,
+   "total_turnover": 57.29273027148696,
+   "n_observations": 2364
+  },
+  "sp500": {
+   "cumulative_return": 2.2355970313894713,
+   "annualized_return_geo": 0.13334106301684523,
+   "annualized_volatility": 0.18514341633478745,
+   "sharpe_ratio": 0.7690948114327586,
+   "sortino_ratio": 0.06802496355613814,
+   "maximum_drawdown": -0.3392496000265331,
+   "calmar_ratio": 0.3930470750928416,
+   "historical_var_daily": 0.017108638566051337,
+   "total_turnover": 0.0,
+   "n_observations": 2364
+  }
+ },
+ "run_config": {
+  "start": null,
+  "end": null,
+  "lookback": 252,
+  "initial_capital": 100000.0,
+  "risk_free_rate_annual": 0.0,
+  "sortino_target": 0.0,
+  "var_confidence": 0.95,
+  "tickers": [
+   "AAPL",
+   "MSFT",
+   "JPM",
+   "JNJ",
+   "PG",
+   "XOM",
+   "HD",
+   "V",
+   "CAT",
+   "KO"
+  ]
+ }
+}
