@@ -157,9 +157,7 @@ class OptimizationResult:
         return d
 
 
-# ---------------------------------------------------------------------------
 # Input validation (fail loudly; never silently repair)
-# ---------------------------------------------------------------------------
 
 def _as_float_1d(values, *, name: str) -> np.ndarray:
     if isinstance(values, (pd.Series, pd.DataFrame)):
@@ -269,9 +267,7 @@ def _constraint_residual(weights: np.ndarray) -> float:
                      max(0.0, -float(np.min(w)))))
 
 
-# ---------------------------------------------------------------------------
 # Result assembly
-# ---------------------------------------------------------------------------
 
 def _assemble_result(weights, *, cov: np.ndarray | None,
                      mu: np.ndarray | None,
@@ -345,9 +341,7 @@ def _run_slsqp(objective_fn, n: int, x0: np.ndarray,
                     options=dict(solver_options))
 
 
-# ---------------------------------------------------------------------------
 # 7. Equal weight (analytic; no optimizer)
-# ---------------------------------------------------------------------------
 
 def equal_weight_portfolio(n_assets: int,
                            covariance_matrix=None,
@@ -393,9 +387,7 @@ def equal_weight_portfolio(n_assets: int,
     )
 
 
-# ---------------------------------------------------------------------------
 # Minimum variance: min w^T Sigma w
-# ---------------------------------------------------------------------------
 
 def minimum_variance_portfolio(covariance_matrix,
                                expected_returns=None,
@@ -458,9 +450,7 @@ def minimum_variance_portfolio(covariance_matrix,
     )
 
 
-# ---------------------------------------------------------------------------
 # Maximum Sharpe: max (w^T mu - R_f) / sqrt(w^T Sigma w)
-# ---------------------------------------------------------------------------
 
 def maximum_sharpe_portfolio(expected_returns, covariance_matrix,
                              risk_free_rate: float = 0.0,

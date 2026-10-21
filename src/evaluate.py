@@ -40,9 +40,6 @@ BASELINE_MODEL = "random_walk"
 REQUIRED_METRIC_FIELDS = ["rmse", "mae", "mape", "r2", "directional_accuracy"]
 
 
-# ---------------------------------------------------------------------------
-# Loading + validation (fail loudly, never silently mislead)
-# ---------------------------------------------------------------------------
 
 def load_config(config_path: str | Path = "config.yaml") -> dict:
     """Load the equity universe from config.yaml."""
@@ -121,9 +118,6 @@ def validate_outputs(metrics: pd.DataFrame, preds: pd.DataFrame | None,
     return pd.DataFrame(rows)
 
 
-# ---------------------------------------------------------------------------
-# Comparison tables (pure functions)
-# ---------------------------------------------------------------------------
 
 def baseline_comparison(metrics: pd.DataFrame) -> pd.DataFrame:
     """Per ticker/model RMSE improvement vs the zero-return baseline.
@@ -193,9 +187,6 @@ def aggregate_summary(metrics: pd.DataFrame,
         "model", key=lambda s: s.map(order)).reset_index(drop=True)
 
 
-# ---------------------------------------------------------------------------
-# Plots + narrative summary
-# ---------------------------------------------------------------------------
 
 def save_fig(fig: plt.Figure, path: str | Path) -> None:
     """Save a figure with default styling and close it."""
@@ -303,9 +294,6 @@ def write_summary(metrics: pd.DataFrame, comparison: pd.DataFrame,
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
 
 def run_evaluation(config_path: str | Path = "config.yaml",
                    models_dir: str | Path = MODELS_DIR,

@@ -86,9 +86,7 @@ class RiskSchema:
     annualized_volatility: float
 
 
-# ---------------------------------------------------------------------------
 # Small validation primitives (no defaults, no filling, no mutation)
-# ---------------------------------------------------------------------------
 
 def _copy(record: dict) -> dict:
     if not isinstance(record, dict):
@@ -122,9 +120,7 @@ def _finite(name: str, value) -> float:
     return result
 
 
-# ---------------------------------------------------------------------------
 # Steps 9-10: contract validators
-# ---------------------------------------------------------------------------
 
 def validate_forecast_input(record: dict) -> ForecastSchema:
     """Validate a forecast record; return a normalized ForecastSchema.

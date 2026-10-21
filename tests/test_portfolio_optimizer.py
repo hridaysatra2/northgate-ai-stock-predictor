@@ -32,9 +32,7 @@ def assert_long_only_fully_invested(weights):
     assert float(np.sum(w)) == pytest.approx(1.0, abs=CONSTRAINT_TOL)
 
 
-# ---------------------------------------------------------------------------
 # 7. Equal weight
-# ---------------------------------------------------------------------------
 
 def test_equal_weight_values():
     r = equal_weight_portfolio(4)
@@ -88,9 +86,7 @@ def test_equal_weight_invalid_n():
         equal_weight_portfolio(True)
 
 
-# ---------------------------------------------------------------------------
 # 8. Minimum variance
-# ---------------------------------------------------------------------------
 
 def test_minvar_two_asset_matches_analytical():
     # interior solution: wA = (vB-c)/(vA+vB-2c) = .006/.042 = 1/7
@@ -155,9 +151,7 @@ def test_minvar_result_structure():
                                 "B": pytest.approx(r.weights[1])}
 
 
-# ---------------------------------------------------------------------------
 # 9. Maximum Sharpe
-# ---------------------------------------------------------------------------
 
 def sharpe_case():
     mu = np.array([0.12, 0.08, 0.05])
@@ -206,9 +200,7 @@ def test_maxsharpe_prefers_high_return_low_vol():
     assert r.weights[0] > 0.9
 
 
-# ---------------------------------------------------------------------------
 # 10. Edge cases
-# ---------------------------------------------------------------------------
 
 def test_single_asset_minvar_returns_one():
     r = minimum_variance_portfolio(np.array([[0.04]]),

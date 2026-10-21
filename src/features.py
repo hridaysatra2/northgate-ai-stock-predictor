@@ -84,9 +84,6 @@ EQUITY_FEATURE_COLUMNS = [
 TARGET_COLUMN = "target_log_return_1d"
 
 
-# ---------------------------------------------------------------------------
-# Small pure helpers
-# ---------------------------------------------------------------------------
 
 def _safe_divide(num: pd.Series, den: pd.Series) -> pd.Series:
     """Element-wise division yielding NaN (never inf) on zero/NaN denom."""
@@ -121,9 +118,6 @@ def _trailing_std(s: pd.Series, window: int) -> pd.Series:
     ).std()
 
 
-# ---------------------------------------------------------------------------
-# Feature builders (pure; no I/O)
-# ---------------------------------------------------------------------------
 
 def build_own_features(dates: pd.Series, adj: pd.Series,
                        volume: pd.Series) -> pd.DataFrame:
@@ -258,9 +252,6 @@ def build_supervised_frame(
     return feats
 
 
-# ---------------------------------------------------------------------------
-# Metadata
-# ---------------------------------------------------------------------------
 
 def feature_metadata_rows() -> list[dict]:
     """One metadata row per feature/target documenting leakage safety."""
@@ -348,9 +339,6 @@ def feature_metadata_rows() -> list[dict]:
     ]
 
 
-# ---------------------------------------------------------------------------
-# I/O + CLI
-# ---------------------------------------------------------------------------
 
 def load_config(config_path: str | Path = "config.yaml") -> dict:
     """Load universe and research dates from config.yaml."""

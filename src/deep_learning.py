@@ -79,9 +79,6 @@ SUPERVISED_TICKERS = [
 ]
 
 
-# ---------------------------------------------------------------------------
-# Loading + schema
-# ---------------------------------------------------------------------------
 
 def sanitize_filename(ticker: str) -> str:
     """Strip '^' for safe filenames (``^GSPC`` -> ``GSPC``)."""
@@ -188,9 +185,6 @@ def clean_supervised_rows(
     return out.reset_index(drop=True)
 
 
-# ---------------------------------------------------------------------------
-# Chronological split (on prediction timestamps / target rows)
-# ---------------------------------------------------------------------------
 
 def chronological_split(
     df: pd.DataFrame,
@@ -226,9 +220,6 @@ def chronological_split(
     return train, val, test
 
 
-# ---------------------------------------------------------------------------
-# Train-only scaling (target never scaled)
-# ---------------------------------------------------------------------------
 
 class TrainOnlyStandardScaler:
     """Mean/std scaler fitted on training rows only.
@@ -300,9 +291,6 @@ def transform_features(
     return scaler.transform(df[feature_cols].to_numpy(dtype=float))
 
 
-# ---------------------------------------------------------------------------
-# Sequence construction
-# ---------------------------------------------------------------------------
 
 def create_sequences(
     values: np.ndarray,
@@ -364,9 +352,6 @@ def _endpoint_split_counts(
     return n_seq_train, n_seq_val, n_seq_test
 
 
-# ---------------------------------------------------------------------------
-# Per-ticker + all-ticker preparation
-# ---------------------------------------------------------------------------
 
 def prepare_ticker(
     ticker: str,
@@ -576,10 +561,6 @@ def prepare_all_tickers(
             "n_tickers": len(tickers)}
 
 
-# ===========================================================================
-# Task 3B — Leakage-free deep-learning training (LSTM/GRU/BiLSTM/Transformer)
-# ===========================================================================
-# Neural-network training and evaluation ONLY. Datasets from Task 3A
 # (``data/processed/deep_learning/``) are read, never regenerated or altered.
 # Raw market data, ``data/processed/features/``, and Task 2C/2D outputs are
 # only ever read, never written.
@@ -721,9 +702,6 @@ def estimate_workload(
     }
 
 
-# ---------------------------------------------------------------------------
-# Reusable PyTorch models (all: (batch, 30, 30) -> (batch,) scalar)
-# ---------------------------------------------------------------------------
 
 if _TORCH_AVAILABLE:
 

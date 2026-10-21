@@ -160,9 +160,7 @@ _SENTIMENT_SUFFIX_AVAILABLE = (
 )
 
 
-# ---------------------------------------------------------------------------
 # Configuration
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class RecommendationThresholds:
@@ -219,9 +217,7 @@ def thresholds_from_dict(values: dict) -> RecommendationThresholds:
     )
 
 
-# ---------------------------------------------------------------------------
 # Input schema
-# ---------------------------------------------------------------------------
 
 def _require_finite(name: str, value, *, allow_none: bool = False,
                     minimum: float | None = None):
@@ -313,9 +309,7 @@ class ForecastInput:
             object.__setattr__(self, "sentiment_score", None)
 
 
-# ---------------------------------------------------------------------------
 # Pure calculation functions
-# ---------------------------------------------------------------------------
 
 def log_to_simple_return(predicted_log_return: float) -> float:
     """Convert log return r_hat to simple return: exp(r_hat) - 1."""
@@ -414,9 +408,7 @@ def build_reason(recommendation: str, forecast_class: str,
     return f"{base} {suffix}"
 
 
-# ---------------------------------------------------------------------------
 # Output schema + main functions
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class Recommendation:
@@ -581,9 +573,7 @@ def recommend_batch(forecasts, thresholds: RecommendationThresholds | None = Non
     return pd.DataFrame(rows, columns=OUTPUT_COLUMNS)
 
 
-# ---------------------------------------------------------------------------
 # Demo (synthetic forecasts only; never repository model outputs)
-# ---------------------------------------------------------------------------
 
 def run_demo(output_dir: str | Path = "data/processed/recommendations",
              thresholds: RecommendationThresholds | None = None) -> pd.DataFrame:

@@ -105,9 +105,7 @@ BENCHMARK = "sp500"
 STRATEGIES = (EQUAL_WEIGHT, ROLLING_MIN_VARIANCE, ROLLING_MAX_SHARPE)
 
 
-# ---------------------------------------------------------------------------
 # Backtest-level Calmar ratio (Task 4A has no Calmar; kept local per spec)
-# ---------------------------------------------------------------------------
 
 def calmar_ratio(annualized_return: float, max_drawdown: float) -> float:
     """Calmar = annualized_return / abs(max_drawdown).
@@ -133,9 +131,7 @@ def calmar_ratio(annualized_return: float, max_drawdown: float) -> float:
     return ret / abs(mdd)
 
 
-# ---------------------------------------------------------------------------
 # Result container
-# ---------------------------------------------------------------------------
 
 @dataclass
 class BacktestResult:
@@ -161,9 +157,7 @@ class BacktestResult:
     tickers: list = field(default_factory=list)
 
 
-# ---------------------------------------------------------------------------
 # Validation helpers
-# ---------------------------------------------------------------------------
 
 def _clean_panel(log_returns: pd.DataFrame, tickers: list[str]) -> pd.DataFrame:
     if not isinstance(log_returns, pd.DataFrame):
@@ -199,9 +193,7 @@ def _clean_benchmark(bench, dates: pd.DatetimeIndex) -> pd.Series | None:
     return s
 
 
-# ---------------------------------------------------------------------------
 # Core rolling engine (pure function of the supplied panel)
-# ---------------------------------------------------------------------------
 
 def run_rolling_backtest(log_returns: pd.DataFrame,
                          benchmark_log_returns=None,
@@ -441,9 +433,7 @@ def run_rolling_backtest(log_returns: pd.DataFrame,
                           metrics=metrics, summary=summary, tickers=tickers)
 
 
-# ---------------------------------------------------------------------------
 # Real-data loader (existing features only; clipped to research cutoff)
-# ---------------------------------------------------------------------------
 
 def load_backtest_data(
         features_dir: str | Path = FEATURES_DIR,
@@ -480,9 +470,7 @@ def load_backtest_data(
             "n_obs": int(len(panel))}
 
 
-# ---------------------------------------------------------------------------
 # Outputs (CSVs + JSON + methodology note)
-# ---------------------------------------------------------------------------
 
 METHODOLOGY_TEMPLATE = """# Backtest Methodology (Task 4D)
 
@@ -617,9 +605,7 @@ def write_backtest_outputs(result: BacktestResult,
                            "BACKTEST_METHODOLOGY.md"]}
 
 
-# ---------------------------------------------------------------------------
 # CLI (project-consistent run_* + main entry points)
-# ---------------------------------------------------------------------------
 
 def run_backtest_cli(output_dir: str | Path = BACKTEST_DIR,
                      start=None, end=None,

@@ -102,9 +102,7 @@ TEST_GRIDS = {
 }
 
 
-# ---------------------------------------------------------------------------
 # Pure helpers (unit-tested)
-# ---------------------------------------------------------------------------
 
 def chronological_split(df: pd.DataFrame,
                         test_fraction: float = TEST_FRACTION,
@@ -237,9 +235,7 @@ def tune_on_development(X_dev: np.ndarray, y_dev: np.ndarray,
     return search.best_estimator_, dict(search.best_params_), rows
 
 
-# ---------------------------------------------------------------------------
 # Per-ticker pipeline
-# ---------------------------------------------------------------------------
 
 def run_ticker(ticker: str, df: pd.DataFrame,
                grids: dict | None = None) -> tuple[list, list, list, list]:
@@ -286,9 +282,6 @@ def run_ticker(ticker: str, df: pd.DataFrame,
     return metric_rows, cv_rows, pred_rows, selected_rows
 
 
-# ---------------------------------------------------------------------------
-# I/O + CLI
-# ---------------------------------------------------------------------------
 
 def load_config(config_path: str | Path = "config.yaml") -> dict:
     """Load equity universe from config.yaml."""
