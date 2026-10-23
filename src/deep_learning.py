@@ -561,10 +561,11 @@ def prepare_all_tickers(
             "n_tickers": len(tickers)}
 
 
+# Neural-network training and evaluation only. Datasets from Task 3A
 # (``data/processed/deep_learning/``) are read, never regenerated or altered.
 # Raw market data, ``data/processed/features/``, and Task 2C/2D outputs are
 # only ever read, never written.
-#
+
 # Target: target_t = log(AdjClose_{t+1} / AdjClose_t), one scalar per
 # 30-day x 30-feature input window. Test set is evaluated exactly once per
 # ticker/model AFTER architecture + config are fixed, early stopping is
