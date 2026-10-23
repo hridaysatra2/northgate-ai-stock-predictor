@@ -67,9 +67,7 @@ def test_backtest_runs_and_reports_period():
         assert rec["status"] == "ok"
 
 
-# ---------------------------------------------------------------------------
 # 15A. Future-return perturbation leaves historical weights unchanged
-# ---------------------------------------------------------------------------
 
 def test_future_return_shock_does_not_move_past_weights():
     panel, bench = make_panel()
@@ -90,9 +88,7 @@ def test_future_return_shock_does_not_move_past_weights():
             assert np.allclose(w_base[d], w_new[d], atol=1e-12), (strat, d)
 
 
-# ---------------------------------------------------------------------------
 # 15B. Future-covariance perturbation leaves historical inputs unchanged
-# ---------------------------------------------------------------------------
 
 def test_future_covariance_shock_leaves_history_unchanged():
     panel, bench = make_panel()
@@ -112,9 +108,7 @@ def test_future_covariance_shock_leaves_history_unchanged():
             assert rec["estimation_end"] < pd.Timestamp(shock_start)
 
 
-# ---------------------------------------------------------------------------
 # 15C. Weights equal direct optimizer output on the preceding window only
-# ---------------------------------------------------------------------------
 
 def test_weights_match_window_only_optimization():
     panel, bench = make_panel()
@@ -137,9 +131,7 @@ def test_weights_match_window_only_optimization():
     assert checked >= 3
 
 
-# ---------------------------------------------------------------------------
 # 15D. No future observation in any estimation window
-# ---------------------------------------------------------------------------
 
 def test_no_future_observation_in_windows():
     panel, bench = make_panel()
@@ -151,9 +143,7 @@ def test_no_future_observation_in_windows():
         assert len(window) == LOOKBACK
 
 
-# ---------------------------------------------------------------------------
 # 15E. First rebalance only after the full lookback exists
-# ---------------------------------------------------------------------------
 
 def test_first_rebalance_requires_full_lookback():
     panel, bench = make_panel(n=300)
@@ -164,9 +154,7 @@ def test_first_rebalance_requires_full_lookback():
     assert r.summary["n_rebalance_dates"] >= 1
 
 
-# ---------------------------------------------------------------------------
 # 15F. Benchmark isolation
-# ---------------------------------------------------------------------------
 
 def test_benchmark_isolated_from_weights():
     panel, bench = make_panel()
@@ -187,9 +175,7 @@ def test_benchmark_isolated_from_weights():
         float(w @ simple_day))
 
 
-# ---------------------------------------------------------------------------
 # 15G. Far-future shock cannot move any historical weight
-# ---------------------------------------------------------------------------
 
 def test_far_future_shock_moves_no_weights_but_moves_values():
     panel, bench = make_panel()
@@ -208,9 +194,7 @@ def test_far_future_shock_moves_no_weights_but_moves_values():
                            shocked.values["rolling_max_sharpe"])
 
 
-# ---------------------------------------------------------------------------
 # 17. Determinism, accounting identities, failure policy, validation
-# ---------------------------------------------------------------------------
 
 def test_determinism():
     panel, bench = make_panel()

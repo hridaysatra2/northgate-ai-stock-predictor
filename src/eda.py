@@ -51,9 +51,6 @@ TABLES_DIR = EDA_DIR / "tables"
 PLOTS_DIR = EDA_DIR / "plots"
 
 
-# ---------------------------------------------------------------------------
-# Pure deterministic helpers (unit-tested, no I/O, no network)
-# ---------------------------------------------------------------------------
 
 def compute_log_returns(adj_close: pd.Series) -> pd.Series:
     """Daily log returns: log(adj_t / adj_{t-1}) using Adjusted Close.
@@ -263,9 +260,6 @@ def cross_asset_row(
     }
 
 
-# ---------------------------------------------------------------------------
-# I/O helpers (read raw only; write processed only)
-# ---------------------------------------------------------------------------
 
 def load_config(config_path: str | Path = "config.yaml") -> dict:
     """Load tickers and research dates from config.yaml."""
@@ -300,9 +294,6 @@ def save_fig(fig: plt.Figure, path: str | Path) -> Path:
     return path
 
 
-# ---------------------------------------------------------------------------
-# Plot builders (descriptive only)
-# ---------------------------------------------------------------------------
 
 def plot_adjusted_price(dates, adj, ticker, path) -> Path:
     """Historical Adjusted Close line plot for one ticker."""
@@ -431,9 +422,6 @@ def plot_realized_vs_vix(dates, realized_pct, vix, path) -> Path:
     return save_fig(fig, path)
 
 
-# ---------------------------------------------------------------------------
-# Main EDA pipeline
-# ---------------------------------------------------------------------------
 
 def run_eda(
     config_path: str | Path = "config.yaml",

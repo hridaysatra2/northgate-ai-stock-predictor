@@ -39,9 +39,7 @@ def three_asset():
     return mu, cov
 
 
-# ---------------------------------------------------------------------------
 # 10A/B. MC constraints + shape
-# ---------------------------------------------------------------------------
 
 def test_mc_weight_constraints():
     mu, cov = three_asset()
@@ -71,9 +69,7 @@ def test_mc_dataframe_columns():
     assert len(df) == 10
 
 
-# ---------------------------------------------------------------------------
 # 10C/D. Determinism + seed sensitivity
-# ---------------------------------------------------------------------------
 
 def test_mc_determinism_same_seed():
     mu, cov = three_asset()
@@ -91,9 +87,7 @@ def test_mc_different_seeds_differ():
     assert not np.allclose(a.weights, b.weights)
 
 
-# ---------------------------------------------------------------------------
 # 10E. Stored metrics match independent Task 4A recomputation
-# ---------------------------------------------------------------------------
 
 def test_mc_metrics_match_portfolio_math():
     mu, cov = three_asset()
@@ -113,9 +107,7 @@ def test_mc_metrics_match_portfolio_math():
                             mc.volatilities[i]))
 
 
-# ---------------------------------------------------------------------------
 # 10F/G. Single asset + two-asset simplex
-# ---------------------------------------------------------------------------
 
 def test_mc_single_asset_all_ones():
     mc = simulate_portfolios(np.array([0.07]), np.array([[0.0225]]),
@@ -137,9 +129,7 @@ def test_mc_two_asset_simplex():
     assert np.all(mc.expected_returns <= 0.10 + 1e-12)
 
 
-# ---------------------------------------------------------------------------
 # 9. MC validation
-# ---------------------------------------------------------------------------
 
 def test_mc_validation():
     mu, cov = two_asset()
@@ -166,9 +156,7 @@ def test_mc_validation():
         simulate_portfolios(mu, np.array([[0.04, 0.05], [0.05, 0.01]]))
 
 
-# ---------------------------------------------------------------------------
 # 11A-D. Frontier feasibility + target matching + variance consistency
-# ---------------------------------------------------------------------------
 
 def test_frontier_constraints_and_targets():
     mu, cov = three_asset()
@@ -203,9 +191,7 @@ def test_frontier_target_range_is_feasible_interval():
     assert np.all(np.diff(fr.target_returns) > 0)
 
 
-# ---------------------------------------------------------------------------
 # 11E/F. Determinism + two-asset analytical behavior
-# ---------------------------------------------------------------------------
 
 def test_frontier_determinism():
     mu, cov = three_asset()
@@ -241,9 +227,7 @@ def test_frontier_minimum_vol_matches_task4b_minvar():
     assert fr.volatilities[idx] <= mv.volatility + 1e-3
 
 
-# ---------------------------------------------------------------------------
 # 11G. Frontier risk no worse than a feasible portfolio at same target
-# ---------------------------------------------------------------------------
 
 def test_frontier_no_worse_than_feasible_blend():
     # feasible 50/50 blend of first two 3-asset names returns R=0.10;
@@ -258,9 +242,7 @@ def test_frontier_no_worse_than_feasible_blend():
     assert fr.volatilities[idx] <= pm.portfolio_volatility(blend, cov) + 1e-6
 
 
-# ---------------------------------------------------------------------------
 # Frontier degenerate + failure representation
-# ---------------------------------------------------------------------------
 
 def test_frontier_flat_mu_replicates_minvar():
     mu = np.array([0.07, 0.07])
@@ -301,9 +283,7 @@ def test_frontier_validation():
         efficient_frontier(np.array([]), np.zeros((0, 0)))
 
 
-# ---------------------------------------------------------------------------
 # 12. Key-portfolio consistency with Task 4B
-# ---------------------------------------------------------------------------
 
 def test_key_portfolios_match_task4b():
     mu, cov = three_asset()
@@ -338,9 +318,7 @@ def test_key_portfolios_consistent_with_mc_geometry():
         np.nanmax(mc.sharpe_ratios) - 1e-6
 
 
-# ---------------------------------------------------------------------------
 # 13. Performance (vectorized default run is fast)
-# ---------------------------------------------------------------------------
 
 def test_default_mc_run_is_fast():
     mu, cov = three_asset()

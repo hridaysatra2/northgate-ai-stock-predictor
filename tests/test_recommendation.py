@@ -27,9 +27,7 @@ def universe(*vols, tickers=("A", "B", "C", "D")):
     return dict(zip(tickers, vols))
 
 
-# ---------------------------------------------------------------------------
 # 1-5. The five rule branches
-# ---------------------------------------------------------------------------
 
 def test_strong_positive_normal_risk_gives_buy():
     out = rec.recommend_one(make_input(), universe(0.15, 0.20, 0.25, 0.30)
@@ -72,9 +70,7 @@ def test_negative_elevated_risk_gives_sell():
         "Forecast return is negative and current volatility is elevated.")
 
 
-# ---------------------------------------------------------------------------
 # 6-7. Forecast conversions (spec example: 200 @ 0.02 -> 2.0201%, 204.04)
-# ---------------------------------------------------------------------------
 
 def test_log_to_simple_conversion():
     assert rec.log_to_simple_return(0.02) == pytest.approx(0.02020134)
@@ -90,9 +86,7 @@ def test_predicted_price_conversion():
     assert out.predicted_price == pytest.approx(204.04013)
 
 
-# ---------------------------------------------------------------------------
 # 8-10. Boundaries
-# ---------------------------------------------------------------------------
 
 def test_threshold_boundaries_inclusive():
     thr = rec.default_thresholds()
@@ -125,9 +119,7 @@ def test_75th_percentile_elevated_boundary_end_to_end():
     assert classes == ["normal", "normal", "elevated", "elevated"]
 
 
-# ---------------------------------------------------------------------------
 # 11/21. Sentiment unavailable, never fabricated, never acted upon
-# ---------------------------------------------------------------------------
 
 def test_sentiment_unavailable_by_default():
     out = rec.recommend_one(make_input(), {"AAA": 0.10})
@@ -160,9 +152,7 @@ def test_sentiment_available_requires_score():
         make_input(sentiment_available=True)
 
 
-# ---------------------------------------------------------------------------
 # 12-17. Validation
-# ---------------------------------------------------------------------------
 
 def test_null_optionals_preserved():
     out = rec.recommend_one(
@@ -238,9 +228,7 @@ def test_invalid_percentile_rejected():
         rec.recommend_one(make_input(), {})
 
 
-# ---------------------------------------------------------------------------
 # 18-20. Determinism, batches, model names
-# ---------------------------------------------------------------------------
 
 def test_deterministic_repeated_execution():
     vols = {"AAA": 0.10, "B": 0.20, "C": 0.30, "D": 0.40}
@@ -296,9 +284,7 @@ def test_custom_thresholds_change_branches_without_scores():
     assert loaded == rec.default_thresholds()
 
 
-# ---------------------------------------------------------------------------
 # 22. Reason consistency + leakage audit
-# ---------------------------------------------------------------------------
 
 def test_reason_text_generated_consistently():
     cases = [

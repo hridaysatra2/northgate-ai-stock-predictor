@@ -67,9 +67,7 @@ TRADING_DAYS_PER_YEAR = 252
 NEG_VAR_TOL = 1e-12
 
 
-# ---------------------------------------------------------------------------
 # Internal validation helpers
-# ---------------------------------------------------------------------------
 
 def _as_float_1d(values, *, name: str) -> np.ndarray:
     """Coerce array-like/Series to a 1-D float ndarray.
@@ -117,9 +115,7 @@ def _clean_1d(values, *, name: str, minimum: int) -> np.ndarray:
     return arr
 
 
-# ---------------------------------------------------------------------------
 # 1. Return statistics (sample estimators, ddof=1)
-# ---------------------------------------------------------------------------
 
 def _is_degenerate_scale(std: float, scale: float) -> bool:
     """True when a dispersion is zero up to float noise.
@@ -253,9 +249,7 @@ def correlation_matrix(returns) -> np.ndarray:
     return corr
 
 
-# ---------------------------------------------------------------------------
 # 2-4. Portfolio moments
-# ---------------------------------------------------------------------------
 
 def _clean_weights(weights, n: int | None = None) -> np.ndarray:
     w = _as_float_1d(weights, name="weights")
@@ -365,9 +359,7 @@ def portfolio_volatility(weights, covariance_matrix) -> float:
     return float(math.sqrt(var))
 
 
-# ---------------------------------------------------------------------------
 # 5. Sharpe ratio
-# ---------------------------------------------------------------------------
 
 def sharpe_ratio(portfolio_return, risk_free_rate, portfolio_volatility) -> float:
     """Sharpe ratio: (Rp - Rf) / sigma_p.
@@ -397,9 +389,7 @@ def sharpe_ratio(portfolio_return, risk_free_rate, portfolio_volatility) -> floa
     return (rp - rf) / vol
 
 
-# ---------------------------------------------------------------------------
 # 6-7. Downside deviation and Sortino ratio
-# ---------------------------------------------------------------------------
 
 def downside_deviation(returns, target: float = 0.0) -> float:
     """Target downside deviation (MAR semideviation), divisor N.
@@ -447,9 +437,7 @@ def sortino_ratio(returns, target_return: float = 0.0) -> float:
     return (float(np.mean(arr)) - tgt) / dd
 
 
-# ---------------------------------------------------------------------------
 # 8. Maximum drawdown
-# ---------------------------------------------------------------------------
 
 def maximum_drawdown(values) -> float:
     """Maximum drawdown of an ordered portfolio-value (equity) curve.
@@ -470,9 +458,7 @@ def maximum_drawdown(values) -> float:
     return float(np.min(drawdowns))
 
 
-# ---------------------------------------------------------------------------
 # 9. Historical Value at Risk
-# ---------------------------------------------------------------------------
 
 def historical_var(returns, confidence: float = 0.95,
                    portfolio_value: float | None = None) -> float:
@@ -516,9 +502,7 @@ def historical_var(returns, confidence: float = 0.95,
     return float(var_return * pv)
 
 
-# ---------------------------------------------------------------------------
 # 10. Annualization helpers (explicit only)
-# ---------------------------------------------------------------------------
 
 def annualized_mean(mean_return_value: float,
                     periods_per_year: int = TRADING_DAYS_PER_YEAR) -> float:

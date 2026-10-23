@@ -74,9 +74,6 @@ __all__ = [
 ]
 
 
-# ---------------------------------------------------------------------------
-# Cached read-only loaders (Streamlit cache; defensive copies on use)
-# ---------------------------------------------------------------------------
 
 def _cached_csv(key: str):
     if st is None:
@@ -153,9 +150,6 @@ def _missing(key: str) -> str:
     return f"Unavailable — expected artifact not found: `{rel}` (no data fabricated)."
 
 
-# ---------------------------------------------------------------------------
-# Pages
-# ---------------------------------------------------------------------------
 
 def render_overview():
     st.header("Overview — quantitative research terminal")
@@ -519,9 +513,6 @@ def render_methodology():
             st.code(audit[:5000], language="text")
 
 
-# ---------------------------------------------------------------------------
-# App entry
-# ---------------------------------------------------------------------------
 
 def main():
     if st is None:  # pragma: no cover

@@ -26,9 +26,6 @@ from src.integration import (
     SYNTHETIC_TICKER_PREFIX,
 )
 
-# ---------------------------------------------------------------------------
-# Constants (exact terminology from project docs / config.yaml)
-# ---------------------------------------------------------------------------
 
 TICKERS = ["AAPL", "MSFT", "JPM", "JNJ", "PG", "XOM", "HD", "V", "CAT", "KO"]
 BENCHMARK_TICKER = "GSPC"
@@ -118,9 +115,6 @@ ARTIFACT_PATHS = {
 }
 
 
-# ---------------------------------------------------------------------------
-# Path / status helpers
-# ---------------------------------------------------------------------------
 
 def get_artifact_paths() -> dict:
     """Return a copy of the known artifact-path map (relative to repo root)."""
@@ -148,9 +142,6 @@ def artifact_status() -> dict:
     }
 
 
-# ---------------------------------------------------------------------------
-# Safe read-only loaders (return copies; None when optional artifact missing)
-# ---------------------------------------------------------------------------
 
 def load_csv_artifact(key: str):
     """Load a CSV artifact by key; return a fresh DataFrame copy or None.
@@ -275,9 +266,6 @@ def load_adf_results():
     return None, ADF_UNAVAILABLE_REASON
 
 
-# ---------------------------------------------------------------------------
-# Synthetic-data safeguards
-# ---------------------------------------------------------------------------
 
 def is_synthetic_ticker(ticker) -> bool:
     """True iff ticker carries the DEMO_ synthetic prefix."""
@@ -355,9 +343,6 @@ def try_generate_live_recommendation(forecast=None, risk=None, **kwargs):
     )
 
 
-# ---------------------------------------------------------------------------
-# Presentation-only derived values (documented conversions, no methodology change)
-# ---------------------------------------------------------------------------
 
 def compute_drawdown(value_series: pd.Series) -> pd.Series:
     """Drawdown fraction (<= 0) of a value curve. Display-only derivation."""

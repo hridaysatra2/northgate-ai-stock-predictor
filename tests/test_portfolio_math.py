@@ -13,9 +13,7 @@ import pytest
 from src import portfolio_math as pm
 
 
-# ---------------------------------------------------------------------------
 # 1. Return statistics: sample-estimator convention, hand calculations
-# ---------------------------------------------------------------------------
 
 def test_mean_return_hand_calculated():
     # (0.01 + 0.02 + 0.03) / 3 = 0.02
@@ -78,9 +76,7 @@ def test_correlation_matrix_matches_pairwise():
     assert mat[0, 1] == pytest.approx(pm.correlation(df["A"], df["B"]))
 
 
-# ---------------------------------------------------------------------------
 # 2. Expected return -- required example A
-# ---------------------------------------------------------------------------
 
 def test_example_a_expected_return():
     # 0.7*0.12 + 0.3*0.08 = 0.084 + 0.024 = 0.108
@@ -94,9 +90,7 @@ def test_expected_return_does_not_normalize_weights():
                                         [0.10, 0.10]) == pytest.approx(0.20)
 
 
-# ---------------------------------------------------------------------------
 # 3-4. Variance / volatility -- required example B
-# ---------------------------------------------------------------------------
 
 def _example_b_cov():
     # var_A = 0.04, var_B = 0.01, cov = 0.2*0.2*0.1 = 0.004
@@ -139,9 +133,7 @@ def test_portfolio_volatility_rejects_materially_negative_variance():
         pm.portfolio_variance([1.0, 0.0], bad)
 
 
-# ---------------------------------------------------------------------------
 # 5. Sharpe -- required example D
-# ---------------------------------------------------------------------------
 
 def test_example_d_sharpe():
     # (0.15 - 0.05) / 0.20 = 0.5
@@ -152,9 +144,7 @@ def test_sharpe_negative_excess():
     assert pm.sharpe_ratio(0.02, 0.05, 0.10) == pytest.approx(-0.3)
 
 
-# ---------------------------------------------------------------------------
 # 6-7. Downside deviation / Sortino -- required example E
-# ---------------------------------------------------------------------------
 
 def test_example_e_downside_deviation_divisor_n():
     # returns [0.02,-0.01,0.03,-0.02,0.01], target 0:
@@ -185,9 +175,7 @@ def test_downside_deviation_all_above_target_is_zero():
                                  target=0.0) == pytest.approx(0.0)
 
 
-# ---------------------------------------------------------------------------
 # 8. Maximum drawdown -- required example F
-# ---------------------------------------------------------------------------
 
 def test_example_f_maximum_drawdown():
     # peaks 100,120,120,120,120 -> trough (90-120)/120 = -0.25
@@ -202,9 +190,7 @@ def test_maximum_drawdown_single_value_is_zero():
     assert pm.maximum_drawdown([100.0]) == pytest.approx(0.0)
 
 
-# ---------------------------------------------------------------------------
 # 9. Historical VaR -- required example G
-# ---------------------------------------------------------------------------
 
 def test_example_g_historical_var_return_units():
     # sorted 10 pts; alpha=0.10 -> idx (10-1)*0.1=0.9 between -0.05,-0.04
@@ -225,9 +211,7 @@ def test_historical_var_positive_loss_convention():
     assert pm.historical_var(r, confidence=0.90) > 0.0
 
 
-# ---------------------------------------------------------------------------
 # 10. Annualization -- required example H
-# ---------------------------------------------------------------------------
 
 def test_example_h_annualized_volatility():
     # 0.01 * sqrt(252)
@@ -240,9 +224,7 @@ def test_annualized_mean():
     assert pm.annualized_mean(0.02, periods_per_year=12) == pytest.approx(0.24)
 
 
-# ---------------------------------------------------------------------------
 # 11. Validation / error cases
-# ---------------------------------------------------------------------------
 
 def test_empty_inputs_raise():
     with pytest.raises(ValueError):

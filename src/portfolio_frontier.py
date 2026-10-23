@@ -76,9 +76,7 @@ FEATURES_DIR = Path("data/processed/features")
 DEMO_RETURN_COLUMN = "log_return_1d"
 
 
-# ---------------------------------------------------------------------------
 # Structured results
-# ---------------------------------------------------------------------------
 
 @dataclass(frozen=True)
 class MonteCarloResult:
@@ -188,9 +186,7 @@ class FrontierResult:
         return df
 
 
-# ---------------------------------------------------------------------------
 # Validation (delegates covariance rules to Task 4B; never repairs)
-# ---------------------------------------------------------------------------
 
 def _clean_seed(seed) -> int:
     if isinstance(seed, bool) or not isinstance(seed, numbers.Integral):
@@ -243,9 +239,7 @@ def _validated_inputs(expected_returns, covariance_matrix,
     return mu, cov, rf, names
 
 
-# ---------------------------------------------------------------------------
 # 2-3. Monte Carlo simulation (vectorized; no per-portfolio optimizer)
-# ---------------------------------------------------------------------------
 
 def simulate_portfolios(expected_returns, covariance_matrix,
                         risk_free_rate: float = 0.0,
@@ -296,9 +290,7 @@ def simulate_portfolios(expected_returns, covariance_matrix,
     )
 
 
-# ---------------------------------------------------------------------------
 # 4-5/7. Efficient frontier (constrained optimization, not MC sorting)
-# ---------------------------------------------------------------------------
 
 def _min_variance_at_target(mu: np.ndarray, cov: np.ndarray,
                             target: float,
@@ -439,9 +431,7 @@ def efficient_frontier(expected_returns, covariance_matrix,
     )
 
 
-# ---------------------------------------------------------------------------
 # 6. Key portfolios (Task 4B owned; no logic duplicated)
-# ---------------------------------------------------------------------------
 
 def key_portfolios(expected_returns, covariance_matrix,
                    risk_free_rate: float = 0.0,
@@ -473,9 +463,7 @@ def key_portfolios(expected_returns, covariance_matrix,
     }
 
 
-# ---------------------------------------------------------------------------
 # 14-15. Explicit analysis entry point + CLI (demo data only, no backtest)
-# ---------------------------------------------------------------------------
 
 def load_illustrative_assumptions(
         features_dir: str | Path = FEATURES_DIR,
